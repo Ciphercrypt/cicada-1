@@ -1,8 +1,6 @@
 package org.aissms.cicada.stego;
 
 import java.util.Date;
-import java.util.List;
-
 import org.aissms.cicada.messaging.MyMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -27,28 +25,7 @@ public class CallMessageController {
         String email1 = call.getEmail1();
         String email2 = call.getEmail2();
 
-        if(call.canStore()) {
-            List<String> list1 = call.getMsgFromEmail1();
-            List<String> list2 = call.getMsgFromEmail2();
-
-            if(email1.equals(auth.getName())) {
-                list1.add(message);
-            } else {
-                list2.add(message);
-            }
-            if(list1.size() > 0 && list2.size() > 0) {
-                call.stopStoring();
-                for(String msg : list1) {
-                    messagingTemplate.convertAndSend("/messages/"+email2, toDto(email1, msg));
-                }
-                for(String msg : list2) {
-                    messagingTemplate.convertAndSend("/messages/"+email1, toDto(email1, msg));
-                }
-                list1.clear();
-                list2.clear();
-            }
-        } else {
-            System.out.println("\n\nMessage : " + message + "\n\n");
+        if(call.imagesReady()) {
             MyMessageDto dto = toDto(auth.getName(), message);
             if(email1.equals(auth.getName())) {
                 messagingTemplate.convertAndSend("/messages/"+email2, dto);

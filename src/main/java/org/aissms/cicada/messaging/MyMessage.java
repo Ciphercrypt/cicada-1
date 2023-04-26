@@ -5,6 +5,7 @@ import java.util.Date;
 public class MyMessage {
     private String authorId;
     private String content;
+    private String imageLink;
     private Date time;
     
     
@@ -38,6 +39,13 @@ public class MyMessage {
         dto.setAuthor(author);
         dto.setContent(author);
         dto.setDate(time);
+        dto.setImageLink(imageLink);
         return dto;
+    }
+    public String getImageLink() {
+        return imageLink;
+    }
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

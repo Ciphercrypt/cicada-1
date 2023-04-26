@@ -1,15 +1,13 @@
 package org.aissms.cicada.stego;
 
-import java.util.ArrayList;
-
 class Call {
     // email1 is the caller
     String email1;
     String email2;
     boolean callStarted;
     boolean store;
-    ArrayList<String> msgFromEmail1;
-    ArrayList<String> msgFromEmail2;
+    String imageLinkFromEmail1;
+    String imageLinkFromEmail2;
     long ringEndTime;
 
     public Call(String user1, String user2, long ringEndTime) {
@@ -17,8 +15,6 @@ class Call {
         this.email2 = user2;
         this.ringEndTime = ringEndTime;
         this.store = true;
-        msgFromEmail1 = new ArrayList<>();
-        msgFromEmail2 = new ArrayList<>();
     }
 
     public String getEmail1() {
@@ -48,10 +44,61 @@ class Call {
     public boolean ringExpired() {
         return System.currentTimeMillis() > ringEndTime;
     }
-    public ArrayList<String> getMsgFromEmail1() {
-        return msgFromEmail1;
+
+    public void setEmail1(String email1) {
+        this.email1 = email1;
     }
-    public ArrayList<String> getMsgFromEmail2() {
-        return msgFromEmail2;
+
+    public void setEmail2(String email2) {
+        this.email2 = email2;
+    }
+
+    public boolean isStore() {
+        return store;
+    }
+
+    public void setStore(boolean store) {
+        this.store = store;
+    }
+
+    public String getImageLinkFromEmail1() {
+        return imageLinkFromEmail1;
+    }
+
+    public void setImageLinkFromEmail1(String imageLinkFromEmail1) {
+        this.imageLinkFromEmail1 = imageLinkFromEmail1;
+    }
+
+    public String getImageLinkFromEmail2() {
+        return imageLinkFromEmail2;
+    }
+
+    public void setImageLinkFromEmail2(String imageLinkFromEmail2) {
+        this.imageLinkFromEmail2 = imageLinkFromEmail2;
+    }
+
+    public void setRingEndTime(long ringEndTime) {
+        this.ringEndTime = ringEndTime;
+    }
+
+    public void setImageLink(String name, String url) {
+        if(name.equals(email1)) {
+            setImageLinkFromEmail1(url);
+        } else if(name.equals(email2)) {
+            setImageLinkFromEmail2(url);
+        }
+    }
+
+    public boolean alreadyUploaded(String name) {
+        if(email1.equals(name)) {
+            return imageLinkFromEmail1 != null;
+        } else if(email2.equals(name)) {
+            return imageLinkFromEmail2 != null;
+        }
+        return true;
+    }
+
+    public boolean imagesReady() {
+        return imageLinkFromEmail1 != null && imageLinkFromEmail2 != null;
     }
 }

@@ -7,6 +7,7 @@ import org.aissms.cicada.conversation.Conversation;
 import org.aissms.cicada.conversation.ConversationRepository;
 import org.aissms.cicada.messaging.MyMessage;
 import org.aissms.cicada.messaging.MyMessageDto;
+import org.aissms.cicada.mongo.FileController;
 import org.aissms.cicada.user.User;
 import org.aissms.cicada.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,10 @@ public class MessageBlockService {
             obj.setContent(message.getContent());
             obj.setDate(message.getTime());
             obj.setMessageIndex(messageIndex);
+            if(message.getImageLink() != null) {
+                obj.setImageLink(FileController.REQUEST_PATH+message.getImageLink());
+                obj.setMessagetype("FILE");
+            }
             if(message.getAuthorId().equals(user1.getId())) {
                 obj.setAuthor(user1.getEmail());
             } else {

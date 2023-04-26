@@ -19,7 +19,7 @@ public class MessageService {
     @Autowired MessageBlockRepository blockRepository;
     @Autowired SimpMessagingTemplate messagingTemplate;
 
-    public MyMessageDto storeMessage(String senderEmail, String receiverEmail, String content) {
+    public MyMessageDto storeMessage(String senderEmail, String receiverEmail, String content, String imageLink) {
         User receiver = userService.findByEmail(receiverEmail);
         if(receiver == null) return null;
         User sender = userService.findByEmail(senderEmail);
@@ -28,6 +28,9 @@ public class MessageService {
         message.setAuthorId(sender.getId());
         message.setContent(content);
         message.setTime();
+        if(imageLink != null) message.setImageLink(imageLink);
+
+        System.out.println(message.getImageLink());
 
         String convId = sender.getConversation().get(receiver.getId());
         Conversation conv = conversationRepository.findById(convId).get();
@@ -54,6 +57,7 @@ public class MessageService {
         dto.setContent(content);
         dto.setDate(message.getTime());
         dto.setBlockIndex(blockIndex);
+        dto.setImageLink(imageLink);
         dto.setMessageIndex(messageIndex);
 
         return dto;

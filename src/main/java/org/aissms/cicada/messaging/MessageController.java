@@ -15,7 +15,7 @@ public class MessageController {
     @MessageMapping("/send/{email}")
     public void sendMessage(@Payload String message, @DestinationVariable("email") String email, Authentication auth) {
         System.out.println(message);
-        MyMessageDto dto = messageService.storeMessage(auth.getName(), email, message);
+        MyMessageDto dto = messageService.storeMessage(auth.getName(), email, message, null);
         
         // if dto is null don't send message to receiver
         if(dto == null) {

@@ -96,3 +96,17 @@ function subscribe() {
 	message = {
 		MESSAGE_TYPE = 'END_OF_CALL',
 	}
+
+#NUMBER_PROMPT WORKING
+1) Generate an image
+2) When user enters a secret and submits then
+	a) Generate public key and private key
+	b) Cipher public key into image
+	c) Upload image to /api/stego/upload/image , post request
+
+# Getting public key of friend
+1) User receives a websocket message with messagetype = STEGO_IMAGE , (attribute = imageLink)
+messages cannot be encrypted before this message.
+
+2) Fetch the image present in STEGO_IMAGE message
+3) Use the secret to decipher public key from image.
