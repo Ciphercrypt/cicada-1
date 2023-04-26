@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,13 +62,14 @@ public class StegoChatController {
     }
 
     @PostMapping("/upload/image")
-    public ResponseEntity<String> uploadStegoImage(MultipartFile image, Authentication auth) {
+    public ResponseEntity<String> uploadStegoImage(@RequestParam("image") MultipartFile image, Authentication auth) {
         Call call = callRepository.getCall(auth.getName());
+        System.out.println("In upload image");
         if(call == null || call.alreadyUploaded(auth.getName())) return ResponseEntity.badRequest().build();
 
         String url = fileService.storeFile(image);
         call.setImageLink(auth.getName(), url);
-
+        System.out.println(url);
         if(call.imagesReady()) {
             notifyUsers(call);
         }

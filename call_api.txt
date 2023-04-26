@@ -110,3 +110,15 @@ messages cannot be encrypted before this message.
 
 2) Fetch the image present in STEGO_IMAGE message
 3) Use the secret to decipher public key from image.
+
+
+
+
+
+
+
+
+# send images
+upload image to "/api/image/send/email2"
+if a message has a field imageLink then it is an image.
+fetch the image from "/api/files/imageLink"

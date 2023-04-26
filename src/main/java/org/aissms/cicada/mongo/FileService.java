@@ -35,7 +35,9 @@ public class FileService {
     }
     private String generateFileName(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
-        String extention = originalFileName.substring(originalFileName.lastIndexOf("."));
+        System.out.println(originalFileName + " : original");
+        // String extention = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String extention = ".png";
         return getUniqueString() + extention;
     }
 }
